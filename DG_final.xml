@@ -1,0 +1,62 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    
+    <!-- Componentes -->
+    <mxCell id="cliente" value="Cliente (Web/WhatsApp/SMS/Voz)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+      <mxGeometry x="100" y="200" width="120" height="60" />
+    </mxCell>
+    
+    <mxCell id="apiGateway" value="Amazon API Gateway" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#F5A623;" parent="1" vertex="1">
+      <mxGeometry x="300" y="200" width="120" height="60" />
+    </mxCell>
+    
+    <mxCell id="lambda" value="AWS Lambda (Inicialização)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#7CE4E8;" parent="1" vertex="1">
+      <mxGeometry x="500" y="200" width="120" height="60" />
+    </mxCell>
+    
+    <mxCell id="stepFunction" value="AWS Step Functions (Orquestração)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9E7D;" parent="1" vertex="1">
+      <mxGeometry x="700" y="200" width="140" height="60" />
+    </mxCell>
+    
+    <mxCell id="lex" value="Amazon Lex (NLP)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#A4C2F4;" parent="1" vertex="1">
+      <mxGeometry x="500" y="100" width="120" height="60" />
+    </mxCell>
+    
+    <mxCell id="dynamoDB" value="Amazon DynamoDB (FAQ/Histórico)" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#F6C3FF;" parent="1" vertex="1">
+      <mxGeometry x="500" y="300" width="120" height="80" />
+    </mxCell>
+    
+    <mxCell id="bedrock" value="Amazon Bedrock (LLM: Claude/Titan)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#D0E6A5;" parent="1" vertex="1">
+      <mxGeometry x="700" y="100" width="140" height="60" />
+    </mxCell>
+    
+    <mxCell id="s3" value="Amazon S3 (Documentos para RAG)" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#B2E1FF;" parent="1" vertex="1">
+      <mxGeometry x="700" y="300" width="140" height="80" />
+    </mxCell>
+    
+    <!-- Conexões -->
+    <mxCell id="conn1" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" parent="1" source="cliente" target="apiGateway" edge="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="conn2" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" parent="1" source="apiGateway" target="lambda" edge="1" />
+    
+    <mxCell id="conn3" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" parent="1" source="lambda" target="stepFunction" edge="1" />
+    
+    <mxCell id="conn4" value="Consulta Intenção" style="endArrow=classic;html=1;dashed=1;entryX=0.5;entryY=0;exitX=0.5;exitY=1;" parent="1" source="stepFunction" target="lex" edge="1" />
+    
+    <mxCell id="conn5" value="Busca Resposta" style="endArrow=classic;html=1;dashed=1;entryX=0.5;entryY=0;exitX=0.5;exitY=1;" parent="1" source="stepFunction" target="dynamoDB" edge="1" />
+    
+    <mxCell id="conn6" value="Geração de Resposta" style="endArrow=classic;html=1;dashed=1;entryX=0.5;entryY=0;exitX=0.5;exitY=1;" parent="1" source="stepFunction" target="bedrock" edge="1" />
+    
+    <mxCell id="conn7" value="Contexto (RAG)" style="endArrow=classic;html=1;dashed=1;entryX=0;entryY=0.5;exitX=1;exitY=0.5;" parent="1" source="s3" target="bedrock" edge="1" />
+    
+    <mxCell id="conn8" value="Retorno" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;" parent="1" source="stepFunction" target="apiGateway" edge="1">
+      <mxGeometry y="-200" relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="conn9" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="apiGateway" target="cliente" edge="1" />
+  </root>
+</mxGraphModel>
